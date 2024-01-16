@@ -22,7 +22,7 @@ class BaseModel:
             del kwargs['__class__']
             # self.__dict__.update(kwargs)
             for key, value in kwargs.items():
-                if key 
+                if 
 
     def __str__(self):
         """Returns a string representation of the instance"""
