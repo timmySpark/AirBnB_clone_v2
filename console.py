@@ -12,13 +12,22 @@ from models.amenity import Amenity
 from models.review import Review
 
 def key_parser(line):
+    """Handles case when argument is passed as:
+    <create> <className> <attribute=value>
+    """
     tokens = line.split()
-    tokens = tokens[2:]
+    tokens = tokens[1:]
     key_val_dict = {}
     for token in tokens:
         key_val = token.split('=')
-        print(key_val[1])
-        key_val_dict[key_val[0]] = key_val[1]
+        if key_val[1][0] == '"':
+            value = key_val[1].strip('"').replace('_', ' ')
+        else:
+            try:
+                value = eval(key_val[1])
+            except (SyntaxError, NameError):
+                continue
+        key_val_dict[key_val[0]] = value
     return key_val_dict
 
 class HBNBCommand(cmd.Cmd):
@@ -128,12 +137,17 @@ class HBNBCommand(cmd.Cmd):
         if not class_name:
             print("** class name missing **")
             return
-        elif class_name not in HBNBCommand.classes:
+        if class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        
-        print(key_parser(args))
+
+        key_dict = key_parser(args)
+        print(key_dict)
         new_instance = HBNBCommand.classes[class_name]()
+        if key_dict:
+            for key, value in key_dict.items():
+                if hasattr(new_instance, key):
+                    setattr(new_instance, key, value)
         storage.save()
         print(new_instance.id)
         storage.save()
