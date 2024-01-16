@@ -11,6 +11,15 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
+def key_parser(line):
+    tokens = line.split()
+    tokens = tokens[2:]
+    key_val_dict = {}
+    for token in tokens:
+        key_val = token.split('=')
+        print(key_val[1])
+        key_val_dict[key_val[0]] = key_val[1]
+    return key_val_dict
 
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
@@ -115,13 +124,16 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        class_name = args.split()[0]
+        if not class_name:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+        
+        print(key_parser(args))
+        new_instance = HBNBCommand.classes[class_name]()
         storage.save()
         print(new_instance.id)
         storage.save()
