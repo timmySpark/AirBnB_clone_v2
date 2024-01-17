@@ -5,8 +5,9 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
 
+
 class Amenity(BaseModel, Base):
     """Amenity class"""
     __tablename__ = "amenities"
     name = Column(String(128), nullable=False)
-    # place_amenities = relationship("Place", secondary="place_amenities", viewonly=False)
+    place_amenities = relationship("Place", secondary="place_amenity", viewonly=False)
