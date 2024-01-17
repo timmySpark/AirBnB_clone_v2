@@ -142,7 +142,6 @@ class HBNBCommand(cmd.Cmd):
             return
 
         key_dict = key_parser(args)
-        print(key_dict)
         new_instance = HBNBCommand.classes[class_name]()
         if key_dict:
             for key, value in key_dict.items():

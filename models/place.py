@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """place Module"""
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, ForeignKey, String
+from sqlalchemy import Column, ForeignKey, String, Integer, Float
+from sqlalchemy.orm import relationship
 
 class Place(BaseModel, Base):
     """Represents a Place for MySQL database
@@ -22,9 +23,9 @@ class Place(BaseModel, Base):
     """
 
     __tablename__ = "places"
-    city_id = Column(String(60),ForeignKey('cities.id'), Nullable="False")
-    user_id = Column(String(60),ForeignKey('users.id'), Nullable="False")
-    name = Column(String(128), Nullable="False")
+    city_id = Column(String(60),ForeignKey('cities.id'), nullable=False)
+    user_id = Column(String(60),ForeignKey('users.id'), nullable=False)
+    name = Column(String(128), nullable=False)
     description = Column(String(1024))
     number_rooms = Column(Integer, default=0)
     number_bathrooms = Column(Integer, default=0)
