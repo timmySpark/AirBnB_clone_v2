@@ -11,19 +11,10 @@ fi
 # create the folders
 mkdir -p /data/web_static/shared/  /data/web_static/releases/test/
 
-echo " 
-	<html>
-  	<head>
-  	</head>
-  	<body>
-    		Holberton School
-  	</body>
-	</html>
-" > /data/web_static/releases/test/index.html
-
+echo " Hello Timmy, I think this works" > /data/web_static/releases/test/index.html
 
 # create a symbolic link
-ln -sf /data/web_static/releases/test/ /data/web_static/current 
+ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 # give ownership
 chown -R ubuntu /data/
@@ -47,14 +38,15 @@ printf %s "server{
     }
 
     location /redirect_me {
-        return 301 "https:www.google.com"
+        return 301 https://www.google.com;
     }
 
     error_page 404 /404.html;
     location /404 {
-        root /var/ww/html
+        root /var/www/html;
         internal;
     }
 }" > /etc/nginx/sites-available/default
 
+nginx -t
 service nginx restart
