@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#server deploment of web_static
 
 apt-get -y update
 
@@ -7,6 +8,8 @@ apt-get -y update
 if ! command -v nginx > /dev/null; then
     apt-get install -y nginx
 fi
+
+ufw allow 'Nginx HTTP'
 
 # create the folders
 mkdir -p /data/web_static/shared/  /data/web_static/releases/test/
